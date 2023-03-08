@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import com.akra.intranet.common.formatToString
+import com.akra.intranet.common.formatToDateString
 import com.akra.intranet.domain.model.Log
 
 @Composable
@@ -52,7 +52,7 @@ fun LogListItem(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Date: ${item.date.formatToString()}"
+                text = "Date: ${item.date.formatToDateString()}"
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

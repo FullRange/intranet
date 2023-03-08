@@ -1,5 +1,9 @@
 package com.akra.intranet.common
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
+import android.widget.DatePicker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,7 +15,7 @@ class Extensions {
     }
 }
 
-fun Date.formatToString(): String {
+fun Date.formatToDateString(): String {
     return Extensions.dateFormat.format(this)
 }
 
@@ -32,3 +36,46 @@ fun String.parseToTime(): Date? =
     } catch(e: Exception) {
         null
     }
+
+fun Context.getDatePicker(
+    initDate: Date?,
+    onDateChanged: (Date) -> Unit
+): DatePickerDialog {
+    val cal = Calendar.getInstance()
+
+    initDate?.let {
+        cal.time = it
+    }
+
+    return DatePickerDialog(this,
+        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+            onDateChanged(
+                Calendar.getInstance().apply {
+                    set(year, month, dayOfMonth, 0, 0)
+                }.time
+            )
+        },
+        cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+    )
+}
+fun Context.getTimePicker(
+    initTime: Date?,
+    onTimeChanged: (Date) -> Unit
+): TimePickerDialog {
+    val cal = Calendar.getInstance()
+
+    initTime?.let {
+        cal.time = it
+    }
+
+    return TimePickerDialog(this,
+        {_, hour : Int, minute: Int ->
+            onTimeChanged(
+                Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, hour)
+                    set(Calendar.MINUTE, minute)
+                }.time
+            )
+        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true
+    )
+}

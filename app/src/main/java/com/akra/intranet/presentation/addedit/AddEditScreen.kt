@@ -1,8 +1,5 @@
 package com.akra.intranet.presentation.addedit
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,10 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.akra.intranet.common.formatToString
-import com.akra.intranet.common.formatToTimeString
-import com.akra.intranet.common.parseToDate
-import com.akra.intranet.common.parseToTime
+import com.akra.intranet.common.*
 import com.akra.intranet.domain.model.Log
 import com.akra.intranet.presentation.Screen
 import java.util.*
@@ -59,7 +53,7 @@ fun AddEditScreen(
                     effect.item?.apply {
                         titleTextFieldState = title
                         descriptionTextFieldState = description
-                        dateTextFieldState = date.formatToString()
+                        dateTextFieldState = date.formatToDateString()
                         fromTextFieldState = from
                         toTextFieldState = to
                     }
@@ -130,20 +124,9 @@ fun AddEditScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .clickable {
-                        val cal = Calendar.getInstance()
-
-                        dateTextFieldState.parseToDate()?.let { date ->
-                            cal.time = date
-                        }
-
-                        DatePickerDialog(context,
-                            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                                dateTextFieldState = Calendar.getInstance().apply {
-                                    set(year, month, dayOfMonth, 0, 0)
-                                }.time.formatToString()
-                            },
-                            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
-                        ).show()
+                        context.getDatePicker(initDate = dateTextFieldState.parseToDate()) {
+                            dateTextFieldState = it.formatToDateString()
+                        }.show()
                     },
                 value = dateTextFieldState,
                 label = {
@@ -161,20 +144,9 @@ fun AddEditScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .clickable {
-                        val cal = Calendar.getInstance()
-
-                        fromTextFieldState.parseToTime()?.let {
-                            cal.time = it
-                        }
-
-                        TimePickerDialog(context,
-                            {_, hour : Int, minute: Int ->
-                                fromTextFieldState = Calendar.getInstance().apply {
-                                    set(Calendar.HOUR_OF_DAY, hour)
-                                    set(Calendar.MINUTE, minute)
-                                }.time.formatToTimeString()
-                            }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true
-                        ).show()
+                        context.getTimePicker(initTime = fromTextFieldState.parseToTime()) {
+                            fromTextFieldState = it.formatToTimeString()
+                        }.show()
                     },
                 value = fromTextFieldState,
                 label = {
@@ -192,20 +164,9 @@ fun AddEditScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .clickable {
-                        val cal = Calendar.getInstance()
-
-                        toTextFieldState.parseToTime()?.let {
-                            cal.time = it
-                        }
-
-                        TimePickerDialog(context,
-                            {_, hour : Int, minute: Int ->
-                                toTextFieldState = Calendar.getInstance().apply {
-                                    set(Calendar.HOUR_OF_DAY, hour)
-                                    set(Calendar.MINUTE, minute)
-                                }.time.formatToTimeString()
-                            }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true
-                        ).show()
+                        context.getTimePicker(initTime = toTextFieldState.parseToTime()) {
+                            toTextFieldState = it.formatToTimeString()
+                        }.show()
                     },
                 value = toTextFieldState,
                 label = {
