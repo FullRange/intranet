@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import com.akra.intranet.R
 import com.akra.intranet.common.formatToDateString
 import com.akra.intranet.domain.model.Log
 
@@ -52,11 +54,11 @@ fun LogListItem(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Date: ${item.date.formatToDateString()}"
+                text = stringResource(R.string.date_msg, item.date.formatToDateString())
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "From ${item.from} to ${item.to}"
+                text = stringResource(R.string.from_to_msg, item.from, item.to)
             )
         }
     }

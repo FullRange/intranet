@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">AkraIntranet</string>
+
+    <string name="log_item_title">Log item</string>
+    <string name="title_text">Title</string>
+    <string name="description_text">Description</string>
+    <string name="date_text">Date</string>
+    <string name="from_text">From</string>
+    <string name="to_text">To</string>
+    <string name="save_txt">Save</string>
+
+    <string name="error_msg">Error: %s</string>
+    <string name="date_msg">Date: %s</string>
+    <string name="from_to_msg">From %s to %s</string>
+    <string name="log_item_list_title">Log Item List</string>
+    <string name="add_log_btn_txt">Add Log</string>
+    <string name="login_btn_txt">Login</string>
+    <string name="password_txt">Password</string>
+    <string name="wrong_credentials_error">Wrong credentials</string>
+    <string name="login_text">Login</string>
 </resources>

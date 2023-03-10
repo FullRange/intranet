@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akra.intranet.common.Resource
 import com.akra.intranet.domain.use_case.get_logs.GetLogsUseCase
+import com.akra.intranet.domain.util.LogOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,11 +21,11 @@ class HomeViewModel @Inject constructor(
     val state: State<HomeState> = _state
 
     init {
-        getLogs()
+        getLogs(state.value.logOrder)
     }
 
-    private fun getLogs() {
-        getLogsUseCase().onEach { result ->
+    private fun getLogs(logOrder: LogOrder) {
+        getLogsUseCase(logOrder).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = HomeState(logList = result.data.orEmpty())

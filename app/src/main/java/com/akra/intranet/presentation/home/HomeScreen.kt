@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.akra.intranet.R
 import com.akra.intranet.presentation.Screen
 import com.akra.intranet.presentation.home.components.LogListItem
 
@@ -37,20 +39,20 @@ fun HomeScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = "Log Item List"
+                    text = stringResource(R.string.log_item_list_title)
                 )
 
                 Button(
                     modifier = Modifier
                         .padding(16.dp),
                     onClick = { navController.navigate(Screen.AddEditScreen.route + "/-1") }) {
-                    Text(text = "Add Log")
+                    Text(text = stringResource(R.string.add_log_btn_txt))
                 }
             }
 
             if (state.error.isNotEmpty()) {
                 Text(
-                    text = "Error: ${state.error}",
+                    text = stringResource(R.string.error_msg, state.error),
                     style = TextStyle(color = Color.Red)
                 )
             }

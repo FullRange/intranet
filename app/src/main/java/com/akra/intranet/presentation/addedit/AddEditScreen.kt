@@ -12,13 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.akra.intranet.R
 import com.akra.intranet.common.*
 import com.akra.intranet.domain.model.Log
 import com.akra.intranet.presentation.Screen
+import kotlinx.coroutines.flow.collectLatest
 import java.util.*
 
 @Composable
@@ -47,7 +50,7 @@ fun AddEditScreen(
     }
 
     LaunchedEffect(key1 = true) {
-        viewModel.effect.collect { effect ->
+        viewModel.effect.collectLatest { effect ->
             when(effect) {
                 is AddEditEffect.ItemInitialized -> {
                     effect.item?.apply {
@@ -74,7 +77,7 @@ fun AddEditScreen(
         ) {
             Text(
                 modifier = Modifier.padding(16.dp),
-                text = "Log item"
+                text = stringResource(R.string.log_item_title)
             )
 
             Spacer(
@@ -86,7 +89,7 @@ fun AddEditScreen(
 
             if (state.error.isNotEmpty()) {
                 Text(
-                    text = "Error: ${state.error}",
+                    text = stringResource(R.string.error_msg, state.error),
                     style = TextStyle(color = Color.Red)
                 )
             }
@@ -97,7 +100,7 @@ fun AddEditScreen(
                     .padding(16.dp),
                 value = titleTextFieldState,
                 label = {
-                    Text("Title")
+                    Text(stringResource(R.string.title_text))
                 },
                 onValueChange = {
                     titleTextFieldState = it
@@ -111,7 +114,7 @@ fun AddEditScreen(
                     .padding(16.dp),
                 value = descriptionTextFieldState,
                 label = {
-                    Text("Description")
+                    Text(stringResource(R.string.description_text))
                 },
                 onValueChange = {
                     descriptionTextFieldState = it
@@ -130,7 +133,7 @@ fun AddEditScreen(
                     },
                 value = dateTextFieldState,
                 label = {
-                    Text("Date")
+                    Text(stringResource(R.string.date_text))
                 },
                 onValueChange = {
                     dateTextFieldState = it
@@ -150,7 +153,7 @@ fun AddEditScreen(
                     },
                 value = fromTextFieldState,
                 label = {
-                    Text("From")
+                    Text(stringResource(R.string.from_text))
                 },
                 onValueChange = {
                     fromTextFieldState = it
@@ -170,7 +173,7 @@ fun AddEditScreen(
                     },
                 value = toTextFieldState,
                 label = {
-                    Text("To")
+                    Text(stringResource(R.string.to_text))
                 },
                 onValueChange = {
                     toTextFieldState = it
@@ -194,7 +197,7 @@ fun AddEditScreen(
                     )
                 }
             ) {
-                Text(text = "Save")
+                Text(text = stringResource(R.string.save_txt))
             }
         }
 
